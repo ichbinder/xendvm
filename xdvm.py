@@ -40,7 +40,10 @@ if __name__ == '__main__':
     mac = xcp.getXenConfObjekt().getVif()[0].getMac()
     IpMac = ("%s;%s" % (ip, mac)).lower()
     
-    cliOptions = "xen-delete-image --lvm %s %s" % (cli.get_vg(), cli.get_hostname())
+    if cli.get_vg() != None:
+        cliOptions = "xen-delete-image --lvm %s %s" % (cli.get_vg(), cli.get_hostname())
+    else:
+        cliOptions = "xen-delete-image --lvm VolGroup %s" % (cli.get_hostname())
 
     p = subprocess.Popen(cliOptions, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     while(True):
@@ -50,7 +53,7 @@ if __name__ == '__main__':
         if(retcode is not None):
             break
 
-    if os.path.isfile(vmconf):
+    if not os.path.isfile(vmconf):
         rIpFree = open(ipdropfile, 'r')
         lines = rIpFree.readlines()
         rIpFree.close()
