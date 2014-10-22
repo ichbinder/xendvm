@@ -28,19 +28,19 @@ if __name__ == '__main__':
         print "ipdrop.txt not found!\n"
         exit(-1)
     
-    #vmconf = "/etc/xen/%s.cfg" % (cli.get_hostname())   
-    vmconf = "%s.cfg" % (cli.get_hostname())
-    if os.path.isfile(vmconf):
-        print "Config " + vmconf + " exist!"
+    vmconf = "/etc/xen/%s.cfg" % (cli.get_hostname())   
+    #vmconf = "%s.cfg" % (cli.get_hostname())
+    if not os.path.isfile(vmconf):
+        print "Config " + vmconf + " dosnt not exist!"
         exit(-1)
     
     xcp = XenConfPaser.XenConfPaser(vmconf)
     xcp.paser()
     ip = xcp.getXenConfObjekt().getVif()[0].getIp()
     mac = xcp.getXenConfObjekt().getVif()[0].getMac()
-    IpMac = "%s;%s" % (ip, mac).lower()
+    IpMac = ("%s;%s" % (ip, mac)).lower()
     
-    cliOptions = "xen-delete-image --lvm %s %s" % (xcp.get_vg(), xcp.get_hostname())
+    cliOptions = "xen-delete-image --lvm %s %s" % (cli.get_vg(), cli.get_hostname())
 
     p = subprocess.Popen(cliOptions, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     while(True):
