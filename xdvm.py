@@ -26,8 +26,8 @@ if __name__ == '__main__':
     cli = Cli.Cli()
     cli.paser()
     
-    ipfreefile = os.path.join("~/ipfree.txt")
-    ipdropfile = os.path.join("~/ipdrop.txt")
+    ipfreefile = "/etc/ipfree.txt"
+    ipdropfile = "/etc/ipdrop.txt"
     
     if not os.path.isfile(ipfreefile):
         print "ipfree.txt not found!\n"
