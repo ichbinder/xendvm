@@ -8,9 +8,18 @@ Created on 21.10.2014
 '''
 
 from XenConfVMPaser import XenConfPaser
-import Cli, os
-import string
+import Cli, os, re
 import subprocess
+
+def clearNewline(clearFile):
+    with open(clearFile,'r+') as ipFile:
+        tmp = ipFile.readlines()
+        ipFile.seek(0)
+        ipFile.truncate()
+        ipFile.seek(0)
+        for l in tmp:
+            if not re.match(r'^\s*$', l):
+                ipFile.write(l)
 
 if __name__ == '__main__':
     
@@ -23,12 +32,17 @@ if __name__ == '__main__':
     if not os.path.isfile(ipfreefile):
         print "ipfree.txt not found!\n"
         exit(-1)
+    else:
+        clearNewline(ipfreefile)
         
     if not os.path.isfile(ipdropfile):
         print "ipdrop.txt not found!\n"
         exit(-1)
+    else:
+        clearNewline(ipdropfile)
     
-    vmconf = "/etc/xen/%s.cfg" % (cli.get_hostname())   
+    #vmconf = "/etc/xen/%s.cfg" % (cli.get_hostname())   
+    vmconf = "%s.cfg" % (cli.get_hostname())
     #vmconf = "%s.cfg" % (cli.get_hostname())
     if not os.path.isfile(vmconf):
         print "Config " + vmconf + " dosnt not exist!"
@@ -44,7 +58,7 @@ if __name__ == '__main__':
         cliOptions = "xen-delete-image --lvm %s %s" % (cli.get_vg(), cli.get_hostname())
     else:
         cliOptions = "xen-delete-image --lvm VolGroup %s" % (cli.get_hostname())
-
+ 
     p = subprocess.Popen(cliOptions, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     while(True):
         retcode = p.poll() #returns None while subprocess is running
@@ -53,16 +67,23 @@ if __name__ == '__main__':
         if(retcode is not None):
             break
 
-    if not os.path.isfile(vmconf):
+    if os.path.isfile(vmconf):
         rIpFree = open(ipdropfile, 'r')
         lines = rIpFree.readlines()
         rIpFree.close()
-        for ims in lines:
-            if string.find(ims, IpMac):
+        for index, ipMacListelement in enumerate(lines):
+            if "\n" in ipMacListelement:
+                ipMacListelement = ipMacListelement[:-1]
+            if ipMacListelement == IpMac:
+                ipMacListelement = "\n" + ipMacListelement
                 with open(ipfreefile, "a") as aIpDrop:
-                    aIpDrop.write(ims)
-                lines.remove(ims)
+                    aIpDrop.write(ipMacListelement)
+                del lines[index]
                 wIpFree = open(ipdropfile, 'w')
                 wIpFree.writelines(lines)
                 wIpFree.close()
+        clearNewline(ipfreefile)
+        clearNewline(ipdropfile)
+                
+
     

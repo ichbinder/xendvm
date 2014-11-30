@@ -65,7 +65,7 @@ class XenConfPaser(object):
             try:
                 vifBridge = re.findall(r"bridge ?= ?.*[,|']", vif)[0].rsplit("=")[1].strip(' ')
             except:
-                print "Info: vif Bridge is not seted."
+                #print "Info: vif Bridge is not seted."
                 vifBridge = None
             listVifObjekts.append(VifObject.VifObjekt(vifBridge, vifIp, vifMac, vifName))
         self.__xenConf = XenConfObject.XenConfObjekt(
