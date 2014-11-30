@@ -41,8 +41,8 @@ if __name__ == '__main__':
     else:
         clearNewline(ipdropfile)
     
-    #vmconf = "/etc/xen/%s.cfg" % (cli.get_hostname())   
-    vmconf = "%s.cfg" % (cli.get_hostname())
+    vmconf = "/etc/xen/%s.cfg" % (cli.get_hostname())   
+    #vmconf = "%s.cfg" % (cli.get_hostname())
     #vmconf = "%s.cfg" % (cli.get_hostname())
     if not os.path.isfile(vmconf):
         print "Config " + vmconf + " dosnt not exist!"
