@@ -42,10 +42,13 @@ if __name__ == '__main__':
         clearNewline(ipdropfile)
     
     vmconf = "/etc/xen/%s.cfg" % (cli.get_hostname())   
-    #vmconf = "%s.cfg" % (cli.get_hostname())
-    #vmconf = "%s.cfg" % (cli.get_hostname())
+
     if not os.path.isfile(vmconf):
         print "Config " + vmconf + " dosnt not exist!"
+        exit(-1)
+        
+    if not os.path.exists(cli.get_vg()):
+        print "Volume Gruppe: " + cli.get_vg() + " dosnt not exist!"
         exit(-1)
     
     xcp = XenConfPaser.XenConfPaser(vmconf)
@@ -67,7 +70,7 @@ if __name__ == '__main__':
         if(retcode is not None):
             break
 
-    if os.path.isfile(vmconf):
+    if not os.path.isfile(vmconf):
         rIpFree = open(ipdropfile, 'r')
         lines = rIpFree.readlines()
         rIpFree.close()
