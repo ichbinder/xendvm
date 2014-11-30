@@ -46,9 +46,7 @@ if __name__ == '__main__':
     if not os.path.isfile(vmconf):
         print "Config " + vmconf + " dosnt not exist!"
         exit(-1)
-        
-    print "/dev/" + cli.get_vg()
-        
+                
     if not os.path.exists("/dev/" + cli.get_vg()):
         print "Volume Gruppe: " + cli.get_vg() + " dosnt not exist!"
         exit(-1)
