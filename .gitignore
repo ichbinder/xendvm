@@ -1,0 +1,12 @@
+.project
+.pydevproject
+.settings/
+Cli.pyc
+XenConfVMPaser/DiskObject.pyc
+XenConfVMPaser/VifObject.pyc
+XenConfVMPaser/XenConfObject.pyc
+XenConfVMPaser/XenConfPaser.pyc
+XenConfVMPaser/__init__.pyc
+ipdrop.txt
+ipfree.txt
+testvm.cfg
