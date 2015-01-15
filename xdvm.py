@@ -45,8 +45,6 @@ if __name__ == '__main__':
     ipfreefile = "/etc/ipfree.txt"
     ipdropfile = "/etc/ipdrop.txt"
     
-    print xcp.getXenConfObjekt().getName()
-    print xcp.getXenConfObjekt().getDHCP()
     if xcp.getXenConfObjekt().getDHCP() == None:
         if not os.path.isfile(ipfreefile):
             print "ipfree.txt not found!\n"
