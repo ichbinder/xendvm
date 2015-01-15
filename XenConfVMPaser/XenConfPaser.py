@@ -6,7 +6,6 @@ import re, os
 import DiskObject
 import VifObject
 import XenConfObject
-from Logging import FileLogging
 
 class XenConfPaser(object):
 
@@ -16,9 +15,7 @@ class XenConfPaser(object):
     __logger = None
 
     def __init__(self, pathToVMConfig):
-        self.__logger = FileLogging.Logger()
         if not os.path.exists(pathToVMConfig):
-            self.__logger.error('Configuration file could not be loaded.' + pathToVMConfig)
             print "Xen VM Configuration file could not be loaded: " + pathToVMConfig
             exit(-1)
         else:
@@ -32,9 +29,8 @@ class XenConfPaser(object):
             data = StringIO.StringIO(confStr)
             self.__config.readfp(data)
         except:
-            self.__logger.error('Xen VM Configuration file could not be loaded.' + self.__pathToVMConfig)
             exit(-1)
-            #print "Configuration file could not be loaded ", e
+            print 'Xen VM Configuration file could not be loaded.' + self.__pathToVMConfig
             #raise
 
         dictOptions = self.__ConfigSectionMap("root")
@@ -52,8 +48,7 @@ class XenConfPaser(object):
                                                              diskName,
                                                              diskReadWrite))
             except:
-                self.__logger.error('Disk Options in Configuration: ' + self.__pathToVMConfig + ' file could not be loaded.')
-                #print "Error: disk Options in Configuration: ", self.__path,"file could not be loaded."
+                print "Error: disk Options in Configuration: ", self.__path,"file could not be loaded."
                 #raise
 
         listVifObjekts = []
@@ -62,26 +57,22 @@ class XenConfPaser(object):
             try:
                 vifName = re.findall(r"vifname ?= ?.*[,|']", vif)[0].rsplit("=")[1].strip(' ').rstrip(",").rstrip("'")
             except:
-                self.__logger.info('vif Name is not seted.')
-                #print "Info: vif Name is not seted."
+                print "Info: vif Name is not seted."
                 vifName = None
             try:
                 vifIp = re.findall(r"ip ?= ?[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}", vif)[0].rsplit("=")[1].strip(' ')
             except:
-                self.__logger.info('vif Ip is not seted.')
-                #print "Info: vif Ip is not seted."
+                print "Info: vif Ip is not seted."
                 vifIp = None
             try:
                 vifMac = re.findall(r"mac ?= ?..:..:..:..:..:..", vif)[0].rsplit("=")[1].strip(' ')
             except:
-                self.__logger.info('vif Mac is not seted.')
-                #print "Info: vif Mac is not seted."
+                print "Info: vif Mac is not seted."
                 vifMac = None
             try:
                 vifBridge = re.findall(r"bridge ?= ?.*[,|']", vif)[0].rsplit("=")[1].strip(' ')
             except:
-                self.__logger.info('vif Bridge is not seted.')
-                #print "Info: vif Bridge is not seted."
+                print "Info: vif Bridge is not seted."
                 vifBridge = None
             listVifObjekts.append(VifObject.VifObjekt(vifBridge, vifIp, vifMac, vifName))
         self.__xenConf = XenConfObject.XenConfObjekt(
@@ -101,8 +92,7 @@ class XenConfPaser(object):
         return self.__xenConf
             
     def __raiser(self, ex):
-        FileLogging.Logger.error(ex)
-        #raise ValueError(ex)
+        raise ValueError(ex)
 
     def __ConfigSectionMap(self, section):
         dictOptions = {}
@@ -113,8 +103,7 @@ class XenConfPaser(object):
                 if dictOptions[option] == "":
                     raise
             except:
-                self.__logger.error("exception on %s! maybe no value?" % option)
-                #print("exception on %s! maybe no value?" % option)
+                print("exception on %s! maybe no value?" % option)
                 #raise
         return dictOptions
 

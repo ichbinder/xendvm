@@ -1,6 +1,5 @@
 __author__ = 'jakob'
 
-from Logging import FileLogging
 
 class DiskObjekt(object):
 
@@ -11,15 +10,14 @@ class DiskObjekt(object):
     __logger = None
 
     def __init__(self, type, pathToDisk, name, readwrite):
-        self.__logger = FileLogging.Logger()
         try:
             if type != "":
                 self.__type = type
             else:
                 raise
         except:
-            self.__logger.error('Type Options in Configuration file: ' + type + ' could not be loaded.')
-            #print "Error: type Options in Configuration file: ", type," could not be loaded."
+            #self.__logger.error('Type Options in Configuration file: ' + type + ' could not be loaded.')
+            print "Error: type Options in Configuration file: ", type," could not be loaded."
             #raise
         try:
             if pathToDisk != "":
@@ -27,8 +25,8 @@ class DiskObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Path Options in Configuration file: ' + pathToDisk + 'could not be loaded.')
-            #print "Error: path Options in Configuration file: ", pathToDisk," could not be loaded."
+            #self.__logger.error('Path Options in Configuration file: ' + pathToDisk + 'could not be loaded.')
+            print "Error: path Options in Configuration file: ", pathToDisk," could not be loaded."
             #raise
         try:
             if name != "":
@@ -36,8 +34,8 @@ class DiskObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Name Options in Configuration file: ' + name + ' could not be loaded.')
-            #print "Error: name Options in Configuration file: ", name," could not be loaded."
+            #self.__logger.error('Name Options in Configuration file: ' + name + ' could not be loaded.')
+            print "Error: name Options in Configuration file: ", name," could not be loaded."
             #raise
         try:
             if readwrite != "":
@@ -45,8 +43,8 @@ class DiskObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Readwrite Options in Configuration file: ' + readwrite +'could not be loaded.')
-            #print "Error: readwrite Options in Configuration file: ", readwrite," could not be loaded."
+            #self.__logger.error('Readwrite Options in Configuration file: ' + readwrite +'could not be loaded.')
+            print "Error: readwrite Options in Configuration file: ", readwrite," could not be loaded."
             #raise
 
     def getType(self):
@@ -68,6 +66,6 @@ class DiskObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Path Options in Configuration file: ' + pathToDisk + 'could not be loaded.')
-            #print "Error: path Options in Configuration file: ", pathToDisk," could not be loaded."
+            #self.__logger.error('Path Options in Configuration file: ' + pathToDisk + 'could not be loaded.')
+            print "Error: path Options in Configuration file: ", pathToDisk," could not be loaded."
             #raise

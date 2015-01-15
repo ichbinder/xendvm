@@ -1,6 +1,5 @@
 __author__ = 'jakob'
 
-from Logging import FileLogging
 
 class XenConfObjekt(object):
 
@@ -20,7 +19,6 @@ class XenConfObjekt(object):
     __logger = None
 
     def __init__(self, vif, name, kernel, bootloader, vcpus, memory, root, dhcp, on_poweroff, on_reboot, on_crash, disk, xenConfigPath):
-        self.__logger = FileLogging.Logger()
         self.__vif = vif
         try:
             if name != "":
@@ -28,8 +26,8 @@ class XenConfObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Name Options in Configuration file: ' + name + ' could not be loaded.')
-            #print "Error: name Options in Configuration file: ", name," could not be loaded."
+            #self.__logger.error('Name Options in Configuration file: ' + name + ' could not be loaded.')
+            print "Error: name Options in Configuration file: ", name," could not be loaded."
             #raise
         try:
             if kernel != "":
@@ -37,8 +35,8 @@ class XenConfObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Kernel Options in Configuration file: ' + kernel + ' could not be loaded.')
-            #print "Error: kernel Options in Configuration file: ", kernel," could not be loaded."
+            #self.__logger.error('Kernel Options in Configuration file: ' + kernel + ' could not be loaded.')
+            print "Error: kernel Options in Configuration file: ", kernel," could not be loaded."
             #raise
         try:
             if bootloader != "":
@@ -46,8 +44,8 @@ class XenConfObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Bootloader Options in Configuration file: ' + bootloader + ' could not be loaded.')
-            #print "Error: bootloader Options in Configuration file: ", bootloader," could not be loaded."
+            #self.__logger.error('Bootloader Options in Configuration file: ' + bootloader + ' could not be loaded.')
+            print "Error: bootloader Options in Configuration file: ", bootloader," could not be loaded."
             #raise
         try:
             if vcpus != "":
@@ -55,8 +53,8 @@ class XenConfObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Vcpus Options in Configuration file: ' + vcpus + ' could not be loaded.')
-            #print "Error: vcpus Options in Configuration file: ", vcpus," could not be loaded."
+            #self.__logger.error('Vcpus Options in Configuration file: ' + vcpus + ' could not be loaded.')
+            print "Error: vcpus Options in Configuration file: ", vcpus," could not be loaded."
             #raise
         try:
             if memory != "":
@@ -64,8 +62,8 @@ class XenConfObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Memory Options in Configuration file: ' + memory + ' could not be loaded.')
-            #print "Error: memory Options in Configuration file: ", memory," could not be loaded."
+            #self.__logger.error('Memory Options in Configuration file: ' + memory + ' could not be loaded.')
+            print "Error: memory Options in Configuration file: ", memory," could not be loaded."
             #raise
         try:
             if dhcp != None:
@@ -73,8 +71,8 @@ class XenConfObjekt(object):
             else:
                 self.__dhcp = None
         except:
-            self.__logger.error('Root Options in Configuration file: ' + dhcp + ' could not be loaded.')
-            #print "Error: root Options in Configuration file: ", dhcp," could not be loaded."
+            #self.__logger.error('Root Options in Configuration file: ' + dhcp + ' could not be loaded.')
+            print "Error: root Options in Configuration file: ", dhcp," could not be loaded."
             #raise
         
         try:
@@ -83,8 +81,8 @@ class XenConfObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Root Options in Configuration file: ' + root + ' could not be loaded.')
-            #print "Error: root Options in Configuration file: ", root," could not be loaded."
+            #self.__logger.error('Root Options in Configuration file: ' + root + ' could not be loaded.')
+            print "Error: root Options in Configuration file: ", root," could not be loaded."
             #raise
         try:
             if on_poweroff != None:
@@ -92,8 +90,8 @@ class XenConfObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Root Options in Configuration file: ' + on_poweroff + ' could not be loaded.')
-            #print "Error: root Options in Configuration file: ", on_poweroff," could not be loaded."
+            #self.__logger.error('Root Options in Configuration file: ' + on_poweroff + ' could not be loaded.')
+            print "Error: root Options in Configuration file: ", on_poweroff," could not be loaded."
             #raise
         try:
             if on_reboot != None:
@@ -101,8 +99,8 @@ class XenConfObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Root Options in Configuration file: ' + on_reboot + ' could not be loaded.')
-            #print "Error: root Options in Configuration file: ", on_reboot," could not be loaded."
+            #self.__logger.error('Root Options in Configuration file: ' + on_reboot + ' could not be loaded.')
+            print "Error: root Options in Configuration file: ", on_reboot," could not be loaded."
             #raise
         try:
             if on_crash != None:
@@ -110,8 +108,8 @@ class XenConfObjekt(object):
             else:
                 raise
         except:
-            self.__logger.error('Root Options in Configuration file: ' + on_crash + ' could not be loaded.')
-            #print "Error: root Options in Configuration file: ", on_crash," could not be loaded."
+            #self.__logger.error('Root Options in Configuration file: ' + on_crash + ' could not be loaded.')
+            print "Error: root Options in Configuration file: ", on_crash," could not be loaded."
             #raise
         self.__disk = disk
         self.__xenConfigPath = xenConfigPath
