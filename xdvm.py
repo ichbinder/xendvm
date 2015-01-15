@@ -26,21 +26,6 @@ if __name__ == '__main__':
     cli = Cli.Cli()
     cli.paser()
     
-    ipfreefile = "/etc/ipfree.txt"
-    ipdropfile = "/etc/ipdrop.txt"
-    
-    if not os.path.isfile(ipfreefile):
-        print "ipfree.txt not found!\n"
-        exit(-1)
-    else:
-        clearNewline(ipfreefile)
-        
-    if not os.path.isfile(ipdropfile):
-        print "ipdrop.txt not found!\n"
-        exit(-1)
-    else:
-        clearNewline(ipdropfile)
-    
     vmconf = "/etc/xen/%s.cfg" % (cli.get_hostname())   
 
     if not os.path.isfile(vmconf):
@@ -57,6 +42,25 @@ if __name__ == '__main__':
     mac = xcp.getXenConfObjekt().getVif()[0].getMac()
     IpMac = ("%s;%s" % (ip, mac)).lower()
     
+    ipfreefile = "/etc/ipfree.txt"
+    ipdropfile = "/etc/ipdrop.txt"
+    
+    print xcp.getXenConfObjekt().getDHCP()
+    if xcp.getXenConfObjekt().getDHCP() == None:
+        if not os.path.isfile(ipfreefile):
+            print "ipfree.txt not found!\n"
+            exit(-1)
+        else:
+            clearNewline(ipfreefile)
+            
+        if not os.path.isfile(ipdropfile):
+            print "ipdrop.txt not found!\n"
+            exit(-1)
+        else:
+            clearNewline(ipdropfile)
+    
+
+    
     if cli.get_vg() != None:
         cliOptions = "xen-delete-image --lvm %s %s" % (cli.get_vg(), cli.get_hostname())
     else:
@@ -69,24 +73,25 @@ if __name__ == '__main__':
         print line[:-1]
         if(retcode is not None):
             break
-
-    if not os.path.isfile(vmconf):
-        rIpFree = open(ipdropfile, 'r')
-        lines = rIpFree.readlines()
-        rIpFree.close()
-        for index, ipMacListelement in enumerate(lines):
-            if "\n" in ipMacListelement:
-                ipMacListelement = ipMacListelement[:-1]
-            if ipMacListelement == IpMac:
-                ipMacListelement = "\n" + ipMacListelement
-                with open(ipfreefile, "a") as aIpDrop:
-                    aIpDrop.write(ipMacListelement)
-                del lines[index]
-                wIpFree = open(ipdropfile, 'w')
-                wIpFree.writelines(lines)
-                wIpFree.close()
-        clearNewline(ipfreefile)
-        clearNewline(ipdropfile)
+    
+    if xcp.getXenConfObjekt().getDHCP() == None:
+        if not os.path.isfile(vmconf):
+            rIpFree = open(ipdropfile, 'r')
+            lines = rIpFree.readlines()
+            rIpFree.close()
+            for index, ipMacListelement in enumerate(lines):
+                if "\n" in ipMacListelement:
+                    ipMacListelement = ipMacListelement[:-1]
+                if ipMacListelement == IpMac:
+                    ipMacListelement = "\n" + ipMacListelement
+                    with open(ipfreefile, "a") as aIpDrop:
+                        aIpDrop.write(ipMacListelement)
+                    del lines[index]
+                    wIpFree = open(ipdropfile, 'w')
+                    wIpFree.writelines(lines)
+                    wIpFree.close()
+            clearNewline(ipfreefile)
+            clearNewline(ipdropfile)
                 
 
     
